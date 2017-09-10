@@ -8,6 +8,7 @@
 
 using std::vector;
 using std::pair;
+using std::make_pair;
 
 typedef std::pair<int,int> Position;
 
@@ -17,28 +18,30 @@ Position operator+(const Position &p1, const Position &p2) {
 
 class Node {
     public:
-        vector<Position> neighbors;
+        vector<std::pair<Position,int>> neighbors;
         int size;
         bool visited;
 
         Node (Position p, int chess_size) {
             std::array<Position,8> movements = {
-                Position(-2,-1),
                 Position(-2,1),
                 Position(-1,2),
                 Position(1,2),
                 Position(2,1),
                 Position(2,-1),
                 Position(1,-2),
-                Position(-1,-2)
+                Position(-1,-2),
+                Position(-2,-1)
             };
+            int order = 1;
             for (auto movement : movements) {
                 auto current_position = p + movement;
                 if (current_position.first < chess_size && current_position.second < chess_size) {
                     if (current_position.first > -1 && current_position.second > -1) {
-                        neighbors.push_back(current_position);
+                        neighbors.push_back(make_pair(current_position,order));
                     }
                 }
+                order++;
             }
             size = (int)neighbors.size();
             visited = false;
@@ -72,10 +75,6 @@ int main(int argc, const char *argv[])
         tour.push_back(tour_line);
     }
 
-    Position current(0,0);
-
-    tour[current.first][current.second] = counter;
-    counter++;
 
     int remainder = size % 8;
     vector<vector<int>> tiebreaking_rules;
@@ -186,21 +185,56 @@ int main(int argc, const char *argv[])
             break;
         default:
             std::cout << "This will never be printed lol " << std::endl;
+    }
+
+    Position current(0,0);
+
+    tour[current.first][current.second] = counter;
+    counter++;
+    int it = 0;
+    auto sit = swap_positions.begin();
 
     while (counter < number_of_moves) {
         Node* current_node = &board.at(current);
         Position next_position;
         int smallest_size = neighborhood_size + 1;
 
-        current_node->visited = true;
+        current_node->visited = true; // Set the current to visited
+
+        if (current == *sit && sit != swap_positions.end()) { // Check the current tiebrake
+            sit++;
+            it++;
+        }
+
+        for (auto neighbor : current_node->neighbors) { // Find the smallest
+            Node* aux = &board.at(neighbor.first);
+            if (aux->visited == true)
+                continue;
+
+            aux->size--;
+            if (aux->size < smallest_size) { // Found one smaller
+                smallest_size = aux->size;
+                next_position = neighbor.first;
+            } else if (aux->size == smallest_size) { // Tie
+                auto p1 = std::find(tiebreaking_rules[it].begin(),tiebreaking_rules[it].end(),next_position);
+                auto p2 = std::find(tiebreaking_rules[it].begin(),tiebreaking_rules[it].end(),neighbor.first);
+                if (p2 < p1) {
+                    smallest_size = aux->size;
+                    next_position = neighbor.first;
+                }
+            }
+        }
+        current = next_position;
+        tour[current.first][current.second] = counter;
+        counter++;
     }
 
-    //for (i = 0; i < size; i++) {
-        //for (j = 0; j < size; j++) {
-            //std::cout << tour[i][j] << "  " << std::endl;
-        //}
-        //std::cout << std::endl;
-    //}
+    for (i = 0; i < size; i++) {
+        for (j = 0; j < size; j++) {
+            std::cout << tour[i][j] << "  " << std::endl;
+        }
+        std::cout << std::endl;
+    }
     
     return 0;
 }
