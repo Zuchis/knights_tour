@@ -96,8 +96,96 @@ int main(int argc, const char *argv[])
             break;
         case 1:
             tiebreaking_rules.push_back({3,4,2,6,1,5,7,8});
+            tiebreaking_rules.push_back({8,7,6,4,2,1,3,5});
+            tiebreaking_rules.push_back({5,1,3,2,4,6,7,8});
+            tiebreaking_rules.push_back({3,2,4,8,1,7,6,5});
+            swap_positions.push_back(Position(size - 1, size - 2));
+            swap_positions.push_back(Position(2,2));
+            swap_positions.push_back(Position(size - 6, ((size - 1) / 2) + 5));
+            swap_positions.push_back(Position(-1,-1));
+            break;
+        case 2:
+            tiebreaking_rules.push_back({3,4,2,6,1,5,7,8});
+            tiebreaking_rules.push_back({8,7,6,4,2,1,3,5});
+            tiebreaking_rules.push_back({5,4,1,3,2,6,7,8});
+            tiebreaking_rules.push_back({5,2,4,3,1,6,7,8});
+            tiebreaking_rules.push_back({8,5,6,4,7,1,2,3});
+            tiebreaking_rules.push_back({1,5,7,4,6,8,2,3});
+            swap_positions.push_back(Position(size - 1, size - 2));
+            swap_positions.push_back(Position(size - 6, size));
+            swap_positions.push_back(Position(size - 15, 4));
+            swap_positions.push_back(Position(10, size - 2));
+            swap_positions.push_back(Position(5, size / 2 - 3));
+            swap_positions.push_back(Position(-1,-1));
+            break;
+        case 3:
+            tiebreaking_rules.push_back({3,4,6,2,5,7,1,8});
+            tiebreaking_rules.push_back({4,2,6,8,1,3,5,7});
+            tiebreaking_rules.push_back({8,6,5,1,2,3,4,7});
+            tiebreaking_rules.push_back({5,1,8,6,7,3,4,2});
+            tiebreaking_rules.push_back({6,1,8,2,5,4,3,7});
+            tiebreaking_rules.push_back({7,1,6,4,2,5,3,8});
+            swap_positions.push_back(Position(size - 1, size - 2));
+            swap_positions.push_back(Position(size - 6, size));
+            swap_positions.push_back(Position(2, 5));
+            swap_positions.push_back(Position(size - 10, 3));
+            swap_positions.push_back(Position(((size - 1) / 2) + 1, size - 2));
+            swap_positions.push_back(Position(-1, -1));
+            break;
+        case 4:
+            tiebreaking_rules.push_back({3,4,2,6,1,5,7,8});
+            tiebreaking_rules.push_back({8,7,6,4,2,1,3,5});
+            tiebreaking_rules.push_back({5,1,8,6,7,3,4,2});
+            tiebreaking_rules.push_back({5,1,3,4,2,6,7,8});
+            tiebreaking_rules.push_back({8,6,7,5,3,4,2,1});
+            tiebreaking_rules.push_back({7,8,5,6,3,4,2,1});
+            swap_positions.push_back(Position(size - 1, size - 2));
+            swap_positions.push_back(Position(2,2));
+            swap_positions.push_back(Position(size - 8, 1));
+            swap_positions.push_back(Position(10, size - 5));
+            swap_positions.push_back(Position(13, size / 2 + 1));
+            swap_positions.push_back(Position(-1,-1));
+            break;
+        case 5:
+            tiebreaking_rules.push_back({3,4,2,6,1,5,7,8});
+            tiebreaking_rules.push_back({8,7,6,4,2,1,3,5});
+            tiebreaking_rules.push_back({5,1,3,2,4,6,7,8});
+            tiebreaking_rules.push_back({1,5,2,3,4,6,7,8});
+            swap_positions.push_back(Position(size - 1, size - 2));
+            swap_positions.push_back(Position(2,2));
+            swap_positions.push_back(size % 16 == 5 ? Position(size - 2, (size - 1) / 2 - 2) : Position(size - 2, (size - 1) / 2 - 6));
+            swap_positions.push_back(Position(-1,-1));
+            break;
+        case 6:
+            tiebreaking_rules.push_back({3,4,2,6,1,5,7,8});
+            tiebreaking_rules.push_back({8,7,6,4,2,1,3,5});
+            tiebreaking_rules.push_back({5,4,1,3,2,6,7,8});
+            tiebreaking_rules.push_back({5,2,4,3,1,6,7,8});
+            tiebreaking_rules.push_back({8,5,6,4,7,1,2,3});
+            tiebreaking_rules.push_back({1,2,4,5,3,6,7,8});
+            swap_positions.push_back(Position(6,1));
+            swap_positions.push_back(Position(3,1));
+            swap_positions.push_back(Position(size - 10, 1));
+            swap_positions.push_back(Position(10, size - 2));
+            swap_positions.push_back(Position(3, size / 2 + 4));
+            swap_positions.push_back(Position(-1,-1));
+            break;
+        case 7:
+            tiebreaking_rules.push_back({3,4,6,2,5,});
+            tiebreaking_rules.push_back({8,7,6,4,2,1,3,5});
+            tiebreaking_rules.push_back({5,4,1,3,2,6,7,8});
+            tiebreaking_rules.push_back({5,2,4,3,1,6,7,8});
+            tiebreaking_rules.push_back({8,5,6,4,7,1,2,3});
+            tiebreaking_rules.push_back({1,2,4,5,3,6,7,8});
+            swap_positions.push_back(Position(6,1));
+            swap_positions.push_back(Position(3,1));
+            swap_positions.push_back(Position(size - 10, 1));
+            swap_positions.push_back(Position(10, size - 2));
+            swap_positions.push_back(Position(3, size / 2 + 4));
+            swap_positions.push_back(Position(-1,-1));
             break;
         default:
+            std::cout << "This will never be printed lol " << std::endl;
 
     while (counter < number_of_moves) {
         Node* current_node = &board.at(current);
