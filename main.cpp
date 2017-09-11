@@ -197,6 +197,7 @@ int main(int argc, const char *argv[])
     while (counter < number_of_moves) {
         Node* current_node = &board.at(current);
         Position next_position;
+        int chosen_move = 0;
         int smallest_size = neighborhood_size + 1;
 
         current_node->visited = true; // Set the current to visited
@@ -215,12 +216,14 @@ int main(int argc, const char *argv[])
             if (aux->size < smallest_size) { // Found one smaller
                 smallest_size = aux->size;
                 next_position = neighbor.first;
+                chosen_move   = neighbor.second;
             } else if (aux->size == smallest_size) { // Tie
-                auto p1 = std::find(tiebreaking_rules[it].begin(),tiebreaking_rules[it].end(),next_position);
-                auto p2 = std::find(tiebreaking_rules[it].begin(),tiebreaking_rules[it].end(),neighbor.first);
+                auto p1 = std::find(tiebreaking_rules[it].begin(),tiebreaking_rules[it].end(),chosen_move);
+                auto p2 = std::find(tiebreaking_rules[it].begin(),tiebreaking_rules[it].end(),neighbor.second);
                 if (p2 < p1) {
                     smallest_size = aux->size;
                     next_position = neighbor.first;
+                    chosen_move   = neighbor.second;
                 }
             }
         }
@@ -231,7 +234,7 @@ int main(int argc, const char *argv[])
 
     for (i = 0; i < size; i++) {
         for (j = 0; j < size; j++) {
-            std::cout << tour[i][j] << "  " << std::endl;
+            std::cout << tour[i][j] << "  ";
         }
         std::cout << std::endl;
     }
